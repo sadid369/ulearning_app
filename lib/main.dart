@@ -4,15 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ulearning_app/app_blocs.dart';
 import 'package:ulearning_app/app_events.dart';
 import 'package:ulearning_app/app_states.dart';
+import 'package:ulearning_app/pages/welcome/bloc/welcome_bloc.dart';
 import 'package:ulearning_app/pages/welcome/welcome.dart';
 
 void main() {
-  runApp(BlocProvider(
-    create: (context) {
-      return AppBlocs();
-    },
-    child: const MyApp(),
-  ));
+  runApp(MultiBlocProvider(providers: [
+    BlocProvider(
+      create: (context) => WelcomeBloc(),
+    ),
+    BlocProvider(
+      create: (context) => AppBlocs(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -47,18 +50,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  // void _incrementCounter() {
-  //   setState(() {
-  //     _counter++;
-  //   });
-  // }
-
-  // void _decrementCounter() {
-  //   setState(() {
-  //     _counter--;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             FloatingActionButton(
+              heroTag: 'increment',
               onPressed: () {
                 context.read<AppBlocs>().add(Increment());
               },
@@ -94,6 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: const Icon(Icons.add),
             ),
             FloatingActionButton(
+              heroTag: 'decrement',
               onPressed: () {
                 context.read<AppBlocs>().add(Decrement());
               },

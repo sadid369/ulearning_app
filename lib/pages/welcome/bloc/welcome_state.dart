@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+class WelcomeState {
+  int page;
+  WelcomeState({
+    this.page = 0,
+  });
+}
 
-@immutable
-abstract class WelcomeState {}
-
-class WelcomeInitial extends WelcomeState {}
+// class WelcomeInitial extends WelcomeState {}
